@@ -74,13 +74,57 @@ const getLivingNeighbors = (cell, state) => {
   return livingNeighbors;
 };
 
-const willBeAlive = (cell, state) => {};
+const willBeAlive = (cell, state) => {
 
-const calculateNext = (state) => {};
+  const livingNeighbors = getLivingNeighbors.call(this, cell, state);
+  const isCellAlive = contains.bind(state, cell).call(this, state);
 
-const iterate = (state, iterations) => {};
+  if (livingNeighbors.length === 3 || (livingNeighbors.length === 2 && isCellAlive)) {
+    return true;
+  }
 
-const main = (pattern, iterations) => {};
+  return false;
+
+};
+
+const calculateNext = (state) => {
+  const bottomLeft = corners.call(this, state).bottomLeft.map(b => b-1);
+  const topRight = corners.call(this, state).topRight.map(t => t+1);
+
+  const rowLength = topRight[0] - bottomLeft[0] + 1;
+
+  const grid = [];
+
+  for (let j = topRight[1]; j >= bottomLeft[1]; j-- ) {
+    for (let i = 0; i < rowLength; i++) {
+      grid.push([bottomLeft[0] + i, j])
+    }
+  }
+
+  return grid.filter(cell => willBeAlive.call(this, cell, state) === true);
+
+};
+
+const iterate = (state, iterations) => {
+
+  const states = [state];
+
+  for (let i = 0; i < iterations; i++) {
+    states.push(calculateNext.call(this, states[i]));
+  }
+  return states;
+
+};
+
+const main = (pattern, iterations) => {
+
+  const states = iterate.call(this, startPatterns[pattern], iterations);
+
+  const printStates = states.map(state => printCells.call(this, state));
+
+  console.log(printStates.join(''));
+  return printStates.join('');
+};
 
 const startPatterns = {
     rpentomino: [
