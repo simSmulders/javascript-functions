@@ -4,7 +4,8 @@
   "description": "Build a Conway's Game of Life Simulator with Javascript - https://pluralsight.com",
   "scripts": {
     "test": "cross-env NODE_ENV=test mocha './test/*.test.js' || true",
-    "test:module1": "cross-env NODE_ENV=test mocha './test/module1.test.js' || true"
+    "test:module1": "cross-env NODE_ENV=test mocha './test/module1.test.js' || true",
+    "test:inspect": "mocha --inspect-brk ./test/module1.test.js"
   },
   "author": "Liam McLennan",
   "license": "MIT",
@@ -15,6 +16,6 @@
     "dot-object": "^1.9.0",
     "esprima": "^4.0.1",
     "jscodeshift": "^0.6.4",
-    "mocha": "^6.2.0"
+    "mocha": "^7.1.2"
   }
 }
